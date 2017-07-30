@@ -20,48 +20,38 @@ public class Test{
 
         List<String> common = new ArrayList<>();
 
-        str = str.toLowerCase();
+        str = str.toLowerCase(); //letter-matching should ignore case
 
-        for(String wd : dict) { //O(n), n = length of dict
-            if(wd.length() < 4) continue; //word less than 4 characters long will not meet criteria
-            String word = wd.toLowerCase(); //letter matching should ignore case
-            System.out.println("----------------------\n" + word);
+        for(String wd : dict) {
+            if(wd.length() < 4) continue; //skip words less than 4 characters long
 
-            boolean added = false; //prevents word from being added to list more than once
+            String word = wd.toLowerCase(); //letter-matching should ignore case
+            boolean added = false; //flag to prevent word from being added to list more than once
+
+            //for each character in word
             for(int character = 0; character < word.length()-3; character++) {
                 char c = word.charAt(character);
-                System.out.println("c in word: " + c);
+
                 for(int i = 0; i < str.length()-3; i++) {
-                    //if there is a matching letter from word in str
-                    if(str.charAt(i) == c) {
+                    if(str.charAt(i) == c) { //if c has found a match in source string
                         boolean fourMatch = true;
-                        System.out.println("START MATCH");
-                        for(int lookahead = character; lookahead < character+4; lookahead++) { //lookahead 3 more places, matchng as we go
-                            System.out.println("\tMatching: \n\tWord: " + word.charAt(lookahead) + ", Source: " + str.charAt(i+(lookahead-character)));
-                            System.out.println("\t" + (i+(lookahead-character)));
-                            if(word.charAt(lookahead) != str.charAt(i+(lookahead-character))) {
-                                System.out.println("MISMATCH");
+
+                        //lookahead 3 more places, matchng as we go
+                        for(int lookahead = character; lookahead < character+4; lookahead++) {
+                            if(word.charAt(lookahead) != str.charAt(i + (lookahead-character) )) { //if mismatch
                                 fourMatch = false;
-                                break; //if not matching till 4 ahead from character, no need to search more
+                                break; //if mismatch is found, no need to keep comparing
                             }
                         }
-                        if(fourMatch) {
+                        if(fourMatch) { //if full match was found
                             common.add(word);
                             added = true;
-                            break;
+                            break; //if word has been added, no point to searching for more matches
                         }
                     }
                 }
-                if(added) break;
+                if(added) break; //once added, we can discard the word entirely and move onto the next word
             }
-        }
-
-        System.out.println("\n===========================\nList size: " + common.size());
-        int j = 0;
-        for(String word : common) {
-            System.out.print(word + ", ");
-            j++;
-            if(j > 10) System.out.println();
         }
         return common;
     }
