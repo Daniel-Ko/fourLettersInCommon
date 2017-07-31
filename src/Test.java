@@ -11,9 +11,11 @@ public class Test{
     }
 
     /** Returns all words in dictionary that have at least 4 consecutive letters in common with the source words
-     @param str is the source word. dict is a String array to search and compare from.
-     @return if source word is shorter than 3 characters, returns null. If no words in dict meet criteria, return empty list.
-     Otherwise, return a List of words that meet criteria
+     @param str is the source word
+     @param dict is a String array to search and compare from.
+     @return null if source word is shorter than 3 characters
+     @return empty List if no words in dict meet criteria
+     @return a List of words that meet criteria
      **/
     public List<String> fourLettersInCommon(String str, String[] dict) {
         if(str.length() < 3) return null;
